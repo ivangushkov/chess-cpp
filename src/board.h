@@ -6,6 +6,12 @@
 #ifndef BOARD_H
 #define BOARD_H
 
+struct BoardSquare {
+    int number;
+    std::string letter;
+    Color color;
+};
+
 // Declare the chess board class
 class ChessBoard {
     private:
@@ -19,6 +25,7 @@ class ChessBoard {
         std::array<std::string, 8> letters;
         std::array<int, 8> number_positions;
         std::array<std::array<std::string, 8>, 8> positions;
+        std::array<std::array<BoardSquare, 8>, 8> boardSquares; // The board squares
         
 };
 

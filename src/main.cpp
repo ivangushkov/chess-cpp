@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <typeinfo>
 
 #include <raylib.h>
 
@@ -43,6 +44,12 @@ int main() {
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
+    
+    // Not sure if I should be doing this in the main loop every time?
+    BeginDrawing();
+        ClearBackground(SKYBLUE);
+        my_chezz.draw_board(screenWidth, screenHeight);
+    EndDrawing();
 
     // Main game loop
     while(!WindowShouldClose()) {
@@ -60,11 +67,8 @@ int main() {
 
         BeginDrawing();
 
-            ClearBackground(SKYBLUE);
-            my_chezz.draw_board(screenWidth, screenHeight);
-            
-            //DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
-
+            DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+        
         EndDrawing();        
 
     }
