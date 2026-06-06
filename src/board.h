@@ -1,3 +1,5 @@
+#include "pieces.h"
+
 #include <array>
 #include <iostream>
 #include <string>
@@ -9,6 +11,7 @@
 struct BoardSquare {
     int number;
     std::string letter;
+    Rectangle rect;
     Color color;
 };
 
@@ -18,9 +21,9 @@ class ChessBoard {
         int board_marginX{100};
         int board_marginY{100};
     public:
-        ChessBoard(int board_marginX, int board_marginY);
+        ChessBoard(int board_marginX, int board_marginY, int screenWidth, int screenHeight);
         void disp_positions();
-        void draw_board(int screenWidth, int screenHeight);
+        void draw_board(PieceSprite pieceSprite);
         
         std::array<std::string, 8> letters;
         std::array<int, 8> number_positions;
