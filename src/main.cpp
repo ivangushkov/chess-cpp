@@ -34,28 +34,18 @@ int main() {
     std::string move;
 
     // Window stuff
-    const int screenWidth = 1600;
-    const int screenHeight = 1200;
+    const int screenWidth = 800;
+    const int screenHeight = 600;
 
     const int board_marginX = 50;
     const int board_marginY = 50;
 
     ChessBoard my_chezz{board_marginX, board_marginY, screenWidth, screenHeight};
-
-    my_chezz.disp_positions();
-
+    
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
     
-    Texture2D testPawn = LoadTexture("../assets/white_pawn2.png");
-
-    Rectangle sourceRec = {50.0f, 50.0f, (float) (testPawn.width -50.0), (float) (testPawn.height -50.0)};
-    Rectangle destRec = {400.0, 400.0, 200.0, 200.0};
-    Vector2 origin = {(float) testPawn.width, (float) testPawn.height};
-
-    float rotation = 0.0;
-
-    PieceSprite pawnSprite = {testPawn, sourceRec, destRec, origin, rotation}; 
+    Pawn testPawn = {0, 1, 1};
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -77,7 +67,7 @@ int main() {
         BeginDrawing();
             
             ClearBackground(SKYBLUE);
-            my_chezz.draw_board(pawnSprite);
+            my_chezz.draw_board(testPawn);
             //DrawTexture(testPawn, 250.0, 100.0, RAYWHITE);
             //DrawTexturePro(testPawn, sourceRec, destRec, origin, rotation, RAYWHITE);
 
@@ -89,7 +79,7 @@ int main() {
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    UnloadTexture(testPawn);
+    UnloadTexture(testPawn.data.sprite.texture);
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
     

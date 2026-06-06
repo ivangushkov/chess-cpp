@@ -31,31 +31,14 @@ ChessBoard::ChessBoard(int board_marginX, int board_marginY, int screenWidth, in
             currentSquare.number = i + 1;
             currentSquare.letter =  letters[j];
 
-            currentSquare.rect.x = (screenWidth-board_side)/2 + i*square_side;
-            currentSquare.rect.y = (board_marginY + board_side - square_side) - j*square_side;
+            currentSquare.rect.x = (screenWidth-board_side)/2 + j*square_side;
+            currentSquare.rect.y = (board_marginY + board_side - square_side) - i*square_side;
             currentSquare.rect.width = square_side;
             currentSquare.rect.height = square_side;
 
-
             
-            // Decide colors
-            if (i % 2 == 0) {
-                if (j % 2 == 0) {
-                    // row even column even
-                    currentSquare.color = MAROON;
-                } else {
-                    // row even column odd
-                    currentSquare.color = RAYWHITE;
-                }       
-            } else {
-                if (j % 2 == 0) {
-                    // row is odd column is even
-                    currentSquare.color = RAYWHITE;
-                } else {
-                    // row is odd column is odd
-                    currentSquare.color = MAROON;
-                }
-            }
+            currentSquare.color = (i + j) % 2 == 0 ? MAROON : RAYWHITE; 
+    
             boardSquares[i][j] = currentSquare;
         };
     }
@@ -75,16 +58,12 @@ void ChessBoard::disp_positions() {
 }
 
 
-void ChessBoard::draw_board(PieceSprite pieceSprite) {
+void ChessBoard::draw_board(Pawn testPawn) {
 
     for (int i = 0; i<= 7; i++) {
         for (int j = 0; j <= 7; j++) {
-            //DrawRectangle(
-            //    (screenWidth-board_side)/2 + i*square_side, 
-            //    (board_marginY + board_side - square_side) - j*square_side, 
-            //    square_side, 
-            //    square_side, 
-            //    boardSquares[i][j].color);
+            
+            // Draw the square
             DrawRectangle(
                 boardSquares[i][j].rect.x,
                 boardSquares[i][j].rect.y,
@@ -93,7 +72,19 @@ void ChessBoard::draw_board(PieceSprite pieceSprite) {
                 boardSquares[i][j].color
             );
 
-            DrawTexturePro(pieceSprite.texture, pieceSprite.sourceRec, pieceSprite.destRec, pieceSprite.origin, pieceSprite.rotation, RAYWHITE);
+            DrawText(
+                positions[i][j].c_str(), 
+                boardSquares[i][j].rect.x + boardSquares[i][j].rect.width/2, 
+                boardSquares[i][j].rect.y + boardSquares[i][j].rect.width/2, 
+                20, BLACK);
+
+            DrawTexturePro(
+                testPawn.data.sprite.texture, 
+                testPawn.data.sprite.sourceRec, 
+                boardSquares[testPawn.data.number_ind][testPawn.data.letter_ind].rect,
+                testPawn.data.sprite.origin, 
+                testPawn.data.sprite.rotation, 
+                RAYWHITE);
         
         }
 

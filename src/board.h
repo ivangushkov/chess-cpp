@@ -23,7 +23,7 @@ class ChessBoard {
     public:
         ChessBoard(int board_marginX, int board_marginY, int screenWidth, int screenHeight);
         void disp_positions();
-        void draw_board(PieceSprite pieceSprite);
+        void draw_board(Pawn testPawn);
         
         std::array<std::string, 8> letters;
         std::array<int, 8> number_positions;
