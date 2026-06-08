@@ -1,6 +1,6 @@
 #include "board.h"
 #include "pieces.h"
-//#include "move_parser.h"
+#include "move_parser.h"
 
 #include <iostream>
 #include <string>
@@ -62,8 +62,8 @@ int main() {
     while(!WindowShouldClose()) {
 
         // Decide whose turn it is and get a move
-        //move = get_move(white_turn, move);
-        //parse_move(move);
+        move = get_move(white_turn, move);
+        parse_move(move);
 
 
         // Flip turn
