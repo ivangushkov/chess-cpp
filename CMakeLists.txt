@@ -7,6 +7,7 @@ add_executable(${PROJECT_NAME}
     src/board.cpp
     src/pieces.cpp
     src/move_parser.cpp
+    src/chess_turn.cpp
     )
 
 

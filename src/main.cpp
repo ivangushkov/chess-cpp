@@ -1,6 +1,7 @@
 #include "board.h"
 #include "pieces.h"
 #include "move_parser.h"
+#include "chess_turn.h"
 
 #include <iostream>
 #include <string>
@@ -8,40 +9,22 @@
 
 #include <raylib.h>
 
-std::string get_move(bool white_turn, std::string move) {
-    // Decide whose turn it is and get a move
-    if (white_turn) {
-        std::cout << "White to move: " << "\n";
-        std::getline(std::cin, move);
-        std::cout << "White entered: " << move << "\n";
-    } else {
-        std::cout << "Black to move: " << "\n";
-        std::getline(std::cin, move);
-        std::cout << "Black entered: " << move << "\n";
-    }
-
-    return move;
-}
-
 int main() {
 
     std::cout << "Hello, world!" << std::endl;
 
     // Some pseudocode
 
-    bool white_turn = 1;
-    bool invalid_move = 1; //Move is assumed invalid until parsed
-
-    std::string move;
-
-    // Window stuff
+    // Raylib Window stuff
     const int screenWidth = 800;
     const int screenHeight = 600;
 
     const int board_marginX = 50;
     const int board_marginY = 50;
 
-    ChessBoard my_chezz{board_marginX, board_marginY, screenWidth, screenHeight};
+    // chess stuff
+    bool white_turn = 1;
+    ChessBoard my_chess{board_marginX, board_marginY, screenWidth, screenHeight};
     
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
@@ -51,7 +34,7 @@ int main() {
     BeginDrawing();
             
         ClearBackground(SKYBLUE);
-        my_chezz.draw_board(testPawn);
+        my_chess.draw_board(testPawn);
         
     EndDrawing();     
 
@@ -61,9 +44,9 @@ int main() {
     // Main game loop
     while(!WindowShouldClose()) {
 
-        // Decide whose turn it is and get a move
-        move = get_move(white_turn, move);
-        parse_move(move);
+        // Perform a chess turn
+        my_chess = chess_turn(my_chess, white_turn);
+
 
 
         // Flip turn
@@ -76,7 +59,7 @@ int main() {
         BeginDrawing();
             
             ClearBackground(SKYBLUE);
-            my_chezz.draw_board(testPawn);
+            my_chess.draw_board(testPawn);
             //DrawTexture(testPawn, 250.0, 100.0, RAYWHITE);
             //DrawTexturePro(testPawn, sourceRec, destRec, origin, rotation, RAYWHITE);
 
