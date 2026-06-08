@@ -8,39 +8,28 @@
 enum PieceType {
   PAWN,
   ROOK,
-  KNIGHT
-}; 
+  KNIGHT,
+  BISHOP,
+  QUEEN,
+  KING
+};
 
 struct Piece {
-    PieceType type;
     Texture2D texture;
     Rectangle sourceRec;
     Vector2 origin;
     float rotation;
-    int letter_ind;
+    Color color;
     bool isWhite;
-    bool captured{0};
-};
-
-struct PieceSprite {
-    Texture2D texture;
-    Rectangle sourceRec;
-    Vector2 origin;
-    float rotation;
-};
-
-struct PieceData {
-    PieceSprite sprite;
+    PieceType type;
     int number_ind;
     int letter_ind;
-    bool isWhite;
     bool captured{0};
+    bool firstMove{1};
 };
 
-class Pawn {
-    public:
-        Pawn(int number_ind, int letter_ind, bool isWhite);
-        PieceData data;
-};
+
+Piece init_piece(int number_ind, int letter_ind, bool isWhite, PieceType type);
+Piece init_pawn(int number_ind, int letter_ind, bool isWhite, PieceType type);
 
 #endif

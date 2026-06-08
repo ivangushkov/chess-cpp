@@ -1,5 +1,6 @@
 #include "board.h"
 #include "pieces.h"
+//#include "move_parser.h"
 
 #include <iostream>
 #include <string>
@@ -45,7 +46,14 @@ int main() {
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
     
-    Pawn testPawn = {0, 1, 1};
+    Piece testPawn = init_piece(0, 1, 1, PAWN);
+
+    BeginDrawing();
+            
+        ClearBackground(SKYBLUE);
+        my_chezz.draw_board(testPawn);
+        
+    EndDrawing();     
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -54,7 +62,8 @@ int main() {
     while(!WindowShouldClose()) {
 
         // Decide whose turn it is and get a move
-        // move = get_move(white_turn, move);
+        //move = get_move(white_turn, move);
+        //parse_move(move);
 
 
         // Flip turn
@@ -79,7 +88,7 @@ int main() {
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    UnloadTexture(testPawn.data.sprite.texture);
+    UnloadTexture(testPawn.texture);
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
     

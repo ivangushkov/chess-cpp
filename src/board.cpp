@@ -58,7 +58,7 @@ void ChessBoard::disp_positions() {
 }
 
 
-void ChessBoard::draw_board(Pawn testPawn) {
+void ChessBoard::draw_board(Piece testPawn) {
 
     for (int i = 0; i<= 7; i++) {
         for (int j = 0; j <= 7; j++) {
@@ -78,16 +78,19 @@ void ChessBoard::draw_board(Pawn testPawn) {
                 boardSquares[i][j].rect.y + boardSquares[i][j].rect.width/2, 
                 20, BLACK);
 
-            DrawTexturePro(
-                testPawn.data.sprite.texture, 
-                testPawn.data.sprite.sourceRec, 
-                boardSquares[testPawn.data.number_ind][testPawn.data.letter_ind].rect,
-                testPawn.data.sprite.origin, 
-                testPawn.data.sprite.rotation, 
-                RAYWHITE);
+            
         
         }
 
     }
+    
+    // Draw the pieces
+    DrawTexturePro(
+                testPawn.texture, 
+                testPawn.sourceRec, 
+                boardSquares[testPawn.number_ind][testPawn.letter_ind].rect,
+                testPawn.origin, 
+                testPawn.rotation, 
+                testPawn.color);
 
 }
