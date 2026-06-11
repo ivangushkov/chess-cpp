@@ -6,12 +6,12 @@
 #define PIECES_H
 
 enum PieceType {
-  PAWN,
+  QUEEN,
+  KING,
   ROOK,
   KNIGHT,
   BISHOP,
-  QUEEN,
-  KING
+  PAWN,
 };
 
 struct Piece {
@@ -30,6 +30,5 @@ struct Piece {
 
 
 Piece init_piece(int number_ind, int letter_ind, bool isWhite, PieceType type);
-Piece init_pawn(int number_ind, int letter_ind, bool isWhite, PieceType type);
 
 #endif

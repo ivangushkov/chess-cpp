@@ -29,7 +29,7 @@ int main() {
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
     
-    Piece testPawn = init_piece(0, 1, 1, PAWN);
+    Piece testPawn = init_piece(0, 1, 1, KNIGHT);
 
     BeginDrawing();
             
