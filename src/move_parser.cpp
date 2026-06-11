@@ -46,8 +46,8 @@ ParsedMove parse_move(std::string move_candidate) {
     char FL = move_candidate[0];
     char TL = move_candidate[2];
 
-    int fInd;
-    int tInd;
+    int fInd{10000};
+    int tInd{10000};
 
     bool correctFL = 0;
     bool correctTL = 0;

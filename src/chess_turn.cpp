@@ -16,7 +16,7 @@ ChessBoard chess_turn(ChessBoard board, bool white_turn) {
     std::string move;
     
     move = get_move(white_turn, move);
-    parse_move(move);
+    ParsedMove parsedMove = parse_move(move);
 
     return board;
 
