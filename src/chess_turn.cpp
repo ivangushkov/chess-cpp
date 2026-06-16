@@ -32,6 +32,8 @@ ChessBoard chess_turn(ChessBoard board, bool white_turn) {
     move = get_move(white_turn, move);
     ParsedMove parsedMove = parse_move(move);
 
+    board.execute_move(parsedMove);
+
     return board;
 
 }

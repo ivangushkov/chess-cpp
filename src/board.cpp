@@ -1,8 +1,9 @@
 #include "board.h"
 #include "pieces.h"
 
-#include <iostream>
 #include <array>
+#include <vector>
+#include <iostream>
 #include <string>
 #include <raylib.h>
 
@@ -177,5 +178,39 @@ void ChessBoard::unload_textures() {
         }
 
     }
+
+}
+
+
+void ChessBoard::resolve_move_piece(std::array<int, 2> from, std::array<int, 2> to) {
+
+    int from_let = from[1];
+    int from_num = from[0];
+
+    int to_let = to[1];
+    int to_num = to[0];
+
+
+    // "from" takes "to" and moves it to correct graveyard
+    if (boardSquares[to_let][to_num].occupied) {
+        if (boardSquares[to_let][to_num].piece.isWhite) {
+            graveyardWhite.push_back(boardSquares[to_let][to_num].piece);
+        } else {
+            graveyardBlack.push_back(boardSquares[to_let][to_num].piece);
+        }
+    }
+
+    // Move piece
+    boardSquares[to_let][to_num].piece = boardSquares[from_let][from_num].piece;
+    
+    // Replace piece by empty square
+    boardSquares[from_let][from_num].piece = init_piece(from_let, from_num, 1, NONE);
+
+}
+
+void ChessBoard::execute_move(ParsedMove move) {
+
+    this->resolve_move_piece(move.from, move.to);
+    this->resolve_occupancy();
 
 }

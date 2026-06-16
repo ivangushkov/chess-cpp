@@ -36,7 +36,7 @@ ParsedMove parse_move(std::string move_candidate) {
 
     std::cout << "Parse string: " << move_candidate << std::endl;
 
-    ParsedMove output = {std::array<int, 4> {0, 0, 0, 0}, 0};
+    ParsedMove output = {std::array<int, 2> {0, 0}, std::array<int, 2> {0, 0}, 0};
 
     // Extract the numbers and convert them to chess indices
     int FN = move_candidate[1] - '0' - 1;
@@ -65,10 +65,10 @@ ParsedMove parse_move(std::string move_candidate) {
         }
     }
 
-    output.move[0] = fInd;
-    output.move[1] = FN;
-    output.move[2] = tInd;
-    output.move[3] = TN;
+    output.from[0] = fInd;
+    output.from[1] = FN;
+    output.to[0] = tInd;
+    output.to[1] = TN;
 
 
     // Check if the move is correct
@@ -111,10 +111,10 @@ ParsedMove parse_move(std::string move_candidate) {
         output.flag = "Encountered the following errors while parsing the move: " + error_flag;
     }
 
-    //std::cout << output.move[0] << std::endl;
-    //std::cout << output.move[1] << std::endl;
-    //std::cout << output.move[2] << std::endl;
-    //std::cout << output.move[3] << std::endl;
+    //std::cout << output.from[0] << std::endl;
+    //std::cout << output.from[1] << std::endl;
+    //std::cout << output.to[0] << std::endl;
+    //std::cout << output.to[1] << std::endl;
     //std::cout << output.valid << std::endl;
     //std::cout << output.flag << std::endl;
 

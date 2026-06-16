@@ -1,6 +1,8 @@
 #include "pieces.h"
+#include "move_parser.h"
 
 #include <array>
+#include <vector>
 #include <iostream>
 #include <string>
 #include <raylib.h>
@@ -24,12 +26,19 @@ class ChessBoard {
         int board_marginY{100};
         void setup_chess_game();
         void resolve_occupancy();
+        void resolve_move_piece(std::array<int, 2> from, std::array<int, 2> to);
+
+        std::vector<Piece> graveyardWhite;
+        std::vector<Piece> graveyardBlack;
+
     public:
         ChessBoard(int board_marginX, int board_marginY, int screenWidth, int screenHeight);
         void disp_positions();
         void draw_board();
         void unload_textures();
-        
+
+        void execute_move(ParsedMove move);
+
         std::array<std::string, 8> letters;
         std::array<int, 8> number_positions;
         std::array<std::array<std::string, 8>, 8> positions;

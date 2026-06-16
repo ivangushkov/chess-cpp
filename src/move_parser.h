@@ -7,7 +7,8 @@
 
 
 struct ParsedMove {
-    std::array<int, 4> move;
+    std::array<int, 2> from;
+    std::array<int, 2> to;
     bool valid{0};
     std::string flag;
 };
