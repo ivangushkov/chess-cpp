@@ -13,6 +13,8 @@ struct BoardSquare {
     std::string letter;
     Rectangle rect;
     Color color;
+    Piece piece;
+    bool occupied{0};
 };
 
 // Declare the chess board class
@@ -23,7 +25,8 @@ class ChessBoard {
     public:
         ChessBoard(int board_marginX, int board_marginY, int screenWidth, int screenHeight);
         void disp_positions();
-        void draw_board(Piece testPawn);
+        void draw_board();
+        void unload_textures();
         
         std::array<std::string, 8> letters;
         std::array<int, 8> number_positions;

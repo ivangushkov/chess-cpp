@@ -6,18 +6,6 @@
 #define MOVE_PARSER_H
 
 
-enum LetterMove {
-  a,
-  b,
-  c,
-  d,
-  e,
-  f,
-  g,
-  h
-};
-
-
 struct ParsedMove {
     std::array<int, 4> move;
     bool valid{0};

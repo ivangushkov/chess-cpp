@@ -12,6 +12,7 @@ enum PieceType {
   KNIGHT,
   BISHOP,
   PAWN,
+  NONE
 };
 
 struct Piece {

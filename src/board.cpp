@@ -14,9 +14,6 @@ ChessBoard::ChessBoard(int board_marginX, int board_marginY, int screenWidth, in
     // Available chess positions
     letters = {"a", "b", "c", "d", "e", "f", "g", "h"};
 
-    std::cout << board_marginX << std::endl;
-    std::cout << board_marginY << std::endl;
-
     int board_side = (screenHeight - 2*board_marginY);
     int square_side = board_side / 8;
     
@@ -36,7 +33,9 @@ ChessBoard::ChessBoard(int board_marginX, int board_marginY, int screenWidth, in
             currentSquare.rect.width = square_side;
             currentSquare.rect.height = square_side;
 
-            
+            Piece emptyPiece = init_piece(i, j, 1, NONE);
+            currentSquare.piece = emptyPiece;
+
             currentSquare.color = (i + j) % 2 == 0 ? MAROON : RAYWHITE; 
     
             boardSquares[i][j] = currentSquare;
@@ -58,7 +57,7 @@ void ChessBoard::disp_positions() {
 }
 
 
-void ChessBoard::draw_board(Piece testPawn) {
+void ChessBoard::draw_board() {
 
     for (int i = 0; i<= 7; i++) {
         for (int j = 0; j <= 7; j++) {
@@ -78,19 +77,32 @@ void ChessBoard::draw_board(Piece testPawn) {
                 boardSquares[i][j].rect.y + boardSquares[i][j].rect.width/2, 
                 20, BLACK);
 
+            if (boardSquares[i][j].piece.type != NONE) {
+                DrawTexturePro(
+                boardSquares[i][j].piece.texture, 
+                boardSquares[i][j].piece.sourceRec, 
+                boardSquares[i][j].rect,
+                boardSquares[i][j].piece.origin, 
+                boardSquares[i][j].piece.rotation, 
+                boardSquares[i][j].piece.color);
             
+            }
         
         }
 
     }
-    
-    // Draw the pieces
-    DrawTexturePro(
-                testPawn.texture, 
-                testPawn.sourceRec, 
-                boardSquares[testPawn.number_ind][testPawn.letter_ind].rect,
-                testPawn.origin, 
-                testPawn.rotation, 
-                testPawn.color);
 
 }
+
+void ChessBoard::unload_textures() {
+
+    for (int i = 0; i<= 7; i++) {
+        for (int j = 0; j <= 7; j++) {
+        
+            UnloadTexture(boardSquares[i][j].piece.texture);
+        
+        }
+
+    }
+
+};

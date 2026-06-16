@@ -11,30 +11,23 @@
 
 int main() {
 
-    std::cout << "Hello, world!" << std::endl;
-
-    // Some pseudocode
-
     // Raylib Window stuff
     const int screenWidth = 800;
     const int screenHeight = 600;
-
+    
+    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+    
     const int board_marginX = 50;
     const int board_marginY = 50;
 
     // chess stuff
     bool white_turn = 1;
     ChessBoard my_chess{board_marginX, board_marginY, screenWidth, screenHeight};
-    
-
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-    
-    Piece testPawn = init_piece(0, 1, 1, KNIGHT);
 
     BeginDrawing();
             
         ClearBackground(SKYBLUE);
-        my_chess.draw_board(testPawn);
+        my_chess.draw_board();
         
     EndDrawing();     
 
@@ -59,7 +52,7 @@ int main() {
         BeginDrawing();
             
             ClearBackground(SKYBLUE);
-            my_chess.draw_board(testPawn);
+            my_chess.draw_board();
             //DrawTexture(testPawn, 250.0, 100.0, RAYWHITE);
             //DrawTexturePro(testPawn, sourceRec, destRec, origin, rotation, RAYWHITE);
 
@@ -71,7 +64,7 @@ int main() {
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    UnloadTexture(testPawn.texture);
+    my_chess.unload_textures(); // Frees up all of the texture memory
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
     

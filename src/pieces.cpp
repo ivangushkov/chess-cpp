@@ -13,7 +13,12 @@ Piece init_piece(int number_ind, int letter_ind, bool isWhite, PieceType type) {
 
     // Select the rectangle cutout of the sprite sheet based on the type enum
     piece.sourceRec.y = isWhite * pieceHeight;
-    piece.sourceRec.x = type * pieceWidth; // Enum magic!
+    
+    if (type != NONE) {
+        piece.sourceRec.x = type * pieceWidth; // Enum magic!
+    } else {
+        piece.sourceRec.x = PAWN * pieceWidth; // This is just a placeholder
+    }
 
     piece.sourceRec.width = pieceWidth;
     piece.sourceRec.height = pieceHeight;
