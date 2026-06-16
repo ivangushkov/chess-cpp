@@ -39,10 +39,83 @@ ChessBoard::ChessBoard(int board_marginX, int board_marginY, int screenWidth, in
             currentSquare.color = (i + j) % 2 == 0 ? MAROON : RAYWHITE; 
     
             boardSquares[i][j] = currentSquare;
-        };
+        }
     }
 
-};
+    this->setup_chess_game();
+    this->resolve_occupancy();
+
+}
+
+void ChessBoard::setup_chess_game() {
+
+    for (int j = 0; j <= 7; j++) {
+
+        // Pawns
+        boardSquares[1][j].piece = init_piece(1, j, 1, PAWN); // White
+        boardSquares[6][j].piece = init_piece(1, j, 0, PAWN); // Black
+        
+        // Rooks
+        if (j == 0) {
+
+            // White
+            boardSquares[0][j].piece = init_piece(0, j, 1, ROOK);
+            boardSquares[0][7-j].piece = init_piece(0, j, 1, ROOK);
+
+            // Black
+            boardSquares[7][j].piece = init_piece(0, j, 0, ROOK);
+            boardSquares[7][7-j].piece = init_piece(0, j, 0, ROOK);
+        }
+        // Knights 
+        if (j == 1) {
+            // White
+            boardSquares[0][j].piece = init_piece(0, j, 1, KNIGHT);
+            boardSquares[0][7-j].piece = init_piece(0, j, 1, KNIGHT);
+
+            // Black
+            boardSquares[7][j].piece = init_piece(0, j, 0, KNIGHT);
+            boardSquares[7][7-j].piece = init_piece(0, j, 0, KNIGHT);
+
+        }
+        // Bishops 
+        if (j == 2) {
+            // White
+            boardSquares[0][j].piece = init_piece(0, j, 1, BISHOP);
+            boardSquares[0][7-j].piece = init_piece(0, j, 1, BISHOP);
+            
+            // Black
+            boardSquares[7][j].piece = init_piece(0, j, 0, BISHOP);
+            boardSquares[7][7-j].piece = init_piece(0, j, 0, BISHOP);
+        }
+        // QUEENS 
+        if (j == 3) {
+            boardSquares[0][j].piece = init_piece(0, j, 1, QUEEN); // White
+            boardSquares[7][j].piece = init_piece(0, j, 0, QUEEN); // Black
+        }
+        // KINGS 
+        if (j == 4) {
+            boardSquares[0][j].piece = init_piece(0, j, 1, KING); // White
+            boardSquares[7][j].piece = init_piece(0, j, 0, KING); // Black
+        }
+
+
+        
+    }
+}
+
+// Jury is still out on whether this is needed at all
+void ChessBoard::resolve_occupancy() {
+    // Loop over the 64 grid of the chess board and 
+    // resolve if the square is occupied or not
+    for (int i = 0; i<= 7; i++) {
+        for (int j = 0; j <= 7; j++) {
+
+            if (boardSquares[i][j].piece.type != NONE) {
+                boardSquares[i][j].occupied = true;
+            }
+        }
+    }
+}
 
 void ChessBoard::disp_positions() {
     
@@ -105,4 +178,4 @@ void ChessBoard::unload_textures() {
 
     }
 
-};
+}

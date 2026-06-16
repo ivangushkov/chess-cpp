@@ -14,7 +14,7 @@ struct BoardSquare {
     Rectangle rect;
     Color color;
     Piece piece;
-    bool occupied{0};
+    bool occupied{false};
 };
 
 // Declare the chess board class
@@ -22,6 +22,8 @@ class ChessBoard {
     private:
         int board_marginX{100};
         int board_marginY{100};
+        void setup_chess_game();
+        void resolve_occupancy();
     public:
         ChessBoard(int board_marginX, int board_marginY, int screenWidth, int screenHeight);
         void disp_positions();
