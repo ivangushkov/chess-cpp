@@ -21,16 +21,21 @@ ChessBoard::ChessBoard(int board_marginX, int board_marginY, int screenWidth, in
     // Loop over the 64 grid of the chess board
     for (int i = 0; i<= 7; i++) {
         for (int j = 0; j <= 7; j++) {
-
+            
+            // index convention: a4 = first column, forth row
+            // i.e. letters = columns, numbers = rows
+            // i.e. board[i][j] --> position letter[i]numbers[j]
+            // i.e. piece(i,j, ..) --> position letter[i]number[j] --> board[i][j]
+            // i.e. i = first index = letters  and  j = second index = numbers
             //std::cout << letters[i] << std::to_string(j+1) << std::endl;
-            positions[i][j] = letters[j] + std::to_string(i+1);
+            positions[i][j] = letters[i] + std::to_string(j+1);
             
             BoardSquare currentSquare;
-            currentSquare.number = i + 1;
-            currentSquare.letter =  letters[j];
+            currentSquare.number = j + 1;
+            currentSquare.letter =  letters[i];
 
-            currentSquare.rect.x = (screenWidth-board_side)/2 + j*square_side;
-            currentSquare.rect.y = (board_marginY + board_side - square_side) - i*square_side;
+            currentSquare.rect.x = (screenWidth-board_side)/2 + i*square_side;
+            currentSquare.rect.y = (board_marginY + board_side - square_side) - j*square_side;
             currentSquare.rect.width = square_side;
             currentSquare.rect.height = square_side;
 
@@ -50,53 +55,54 @@ ChessBoard::ChessBoard(int board_marginX, int board_marginY, int screenWidth, in
 
 void ChessBoard::setup_chess_game() {
 
-    for (int j = 0; j <= 7; j++) {
+    // i = letters
+    for (int i = 0; i <= 7; i++) {
 
         // Pawns
-        boardSquares[1][j].piece = init_piece(1, j, 1, PAWN); // White
-        boardSquares[6][j].piece = init_piece(1, j, 0, PAWN); // Black
+        boardSquares[i][1].piece = init_piece(i, 1, 1, PAWN); // White
+        boardSquares[i][6].piece = init_piece(i, 1, 0, PAWN); // Black
         
         // Rooks
-        if (j == 0) {
+        if (i == 0) {
 
             // White
-            boardSquares[0][j].piece = init_piece(0, j, 1, ROOK);
-            boardSquares[0][7-j].piece = init_piece(0, j, 1, ROOK);
+            boardSquares[i][0].piece = init_piece(i, 0, 1, ROOK);
+            boardSquares[7-i][0].piece = init_piece(7-i, 0, 1, ROOK);
 
             // Black
-            boardSquares[7][j].piece = init_piece(0, j, 0, ROOK);
-            boardSquares[7][7-j].piece = init_piece(0, j, 0, ROOK);
+            boardSquares[i][7].piece = init_piece(i, 7, 0, ROOK);
+            boardSquares[7-i][7].piece = init_piece(7-i, 7, 0, ROOK);
         }
         // Knights 
-        if (j == 1) {
+        if (i == 1) {
             // White
-            boardSquares[0][j].piece = init_piece(0, j, 1, KNIGHT);
-            boardSquares[0][7-j].piece = init_piece(0, j, 1, KNIGHT);
+            boardSquares[i][0].piece = init_piece(i, 0, 1, KNIGHT);
+            boardSquares[7-i][0].piece = init_piece(7-i, 0, 1, KNIGHT);
 
             // Black
-            boardSquares[7][j].piece = init_piece(0, j, 0, KNIGHT);
-            boardSquares[7][7-j].piece = init_piece(0, j, 0, KNIGHT);
+            boardSquares[i][7].piece = init_piece(i, 7, 0, KNIGHT);
+            boardSquares[7-i][7].piece = init_piece(7-i, 7, 0, KNIGHT);
 
         }
         // Bishops 
-        if (j == 2) {
+        if (i == 2) {
             // White
-            boardSquares[0][j].piece = init_piece(0, j, 1, BISHOP);
-            boardSquares[0][7-j].piece = init_piece(0, j, 1, BISHOP);
+            boardSquares[i][0].piece = init_piece(i, 0, 1, BISHOP);
+            boardSquares[7-i][0].piece = init_piece(7-i, 0, 1, BISHOP);
             
             // Black
-            boardSquares[7][j].piece = init_piece(0, j, 0, BISHOP);
-            boardSquares[7][7-j].piece = init_piece(0, j, 0, BISHOP);
+            boardSquares[i][7].piece = init_piece(i, 7, 0, BISHOP);
+            boardSquares[7-i][7].piece = init_piece(7-i, 7, 0, BISHOP);
         }
         // QUEENS 
-        if (j == 3) {
-            boardSquares[0][j].piece = init_piece(0, j, 1, QUEEN); // White
-            boardSquares[7][j].piece = init_piece(0, j, 0, QUEEN); // Black
+        if (i == 3) {
+            boardSquares[i][0].piece = init_piece(i, 0, 1, QUEEN); // WHITE
+            boardSquares[i][7].piece = init_piece(i, 7, 0, QUEEN); // BLACK
         }
         // KINGS 
-        if (j == 4) {
-            boardSquares[0][j].piece = init_piece(0, j, 1, KING); // White
-            boardSquares[7][j].piece = init_piece(0, j, 0, KING); // Black
+        if (i == 4) {
+            boardSquares[i][0].piece = init_piece(i, 0, 1, KING); // WHITE
+            boardSquares[i][7].piece = init_piece(i, 7, 0, KING); // BLACK
         }
 
 
@@ -184,11 +190,11 @@ void ChessBoard::unload_textures() {
 
 void ChessBoard::resolve_move_piece(std::array<int, 2> from, std::array<int, 2> to) {
 
-    int from_let = from[1];
-    int from_num = from[0];
+    int from_let = from[0];
+    int from_num = from[1];
 
-    int to_let = to[1];
-    int to_num = to[0];
+    int to_let = to[0];
+    int to_num = to[1];
 
 
     // "from" takes "to" and moves it to correct graveyard
